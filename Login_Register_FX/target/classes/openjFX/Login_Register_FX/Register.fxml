@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" style="-fx-background-color: #404247;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="openjFX.Login_Register_FX.RegisterController">
+  <columnConstraints>
+      <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="0.0" />
+    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="300.0" />
+    <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="0.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="0.0" valignment="CENTER" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="300.0" valignment="CENTER" vgrow="SOMETIMES" />
+    <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="0.0" valignment="CENTER" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <AnchorPane style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Label layoutX="144.0" layoutY="4.0" text="Sign Up" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usernameField" layoutX="47.0" layoutY="39.0" prefWidth="250.0" promptText="USERNAME" styleClass="textField">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="emailField" layoutX="47.0" layoutY="100.0" prefWidth="250.0" promptText="EMAIL" styleClass="textField">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </TextField>
+            <PasswordField fx:id="passwordField" layoutX="47.0" layoutY="162.0" prefWidth="250.0" promptText="PASSWORD" styleClass="passwordField">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </PasswordField>
+            <Button fx:id="signupButton" layoutX="47.0" layoutY="246.0" mnemonicParsing="false" onAction="#SignUp" prefHeight="35.0" prefWidth="250.0" styleClass="acptButton" text="Sign Up" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Label layoutX="47.0" layoutY="296.0" text="Have an account?" textFill="WHITE" />
+            <Button fx:id="loginButton" layoutX="143.0" layoutY="292.0" mnemonicParsing="false" onAction="#SwitchScene" styleClass="loginButton" text="Log In" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+         </children></AnchorPane>
+   </children>
+</GridPane>

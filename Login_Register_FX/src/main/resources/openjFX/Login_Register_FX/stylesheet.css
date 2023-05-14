@@ -1,0 +1,25 @@
+.textField,.passwordField{
+	-fx-background-color: transparent;
+	-fx-text-fill: white;
+	
+    -fx-border-color: #aaa;
+    -fx-border-width: 0 0 2 0;
+    -fx-margin-top: 10px
+
+}
+.acptButton{
+	-fx-background-color:#7289DA;
+	
+}
+.acptButton:hover{
+	-fx-background-color:#6B7FC5;
+}
+.loginButton{
+	-fx-background-color:transparent;
+	
+}
+.loginButton:hover{
+	-fx-border-color: #aaa;
+    -fx-border-width: 0 0 2 0;
+    -fx-margin-top: 10px;
+}
