@@ -14,6 +14,7 @@ public class RegisterDAO {
 
     private static final Logger logger = Logger.getLogger(RegisterDAO.class.getName());
 
+    //this is for check users exist
     public boolean checkUsers(String username, String email) {
         String checkQuery = "SELECT * from user where username =? OR email =?";
         boolean checkuser = false;
@@ -40,7 +41,7 @@ public class RegisterDAO {
         }
         return checkuser;
     }
-
+    //this is for save User to MySQL
     public int saveUser(User user) throws SQLException {
         String query = "INSERT INTO user(username, email, password) VALUES(?, ?, ?)";
 

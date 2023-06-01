@@ -54,6 +54,7 @@ public class LoginController implements Initializable{
 		return false;
 	}
 	public void Login(ActionEvent e) throws IOException {
+		//this will check username and password field less than 5 char or username don't exist in MySQL
 		if(!isValidated() && loginDAO.Login(usernameField.getText(),passwordField.getText())) {
 
 			Parent root = FXMLLoader.load(getClass().getResource("WelcomePage.fxml"));

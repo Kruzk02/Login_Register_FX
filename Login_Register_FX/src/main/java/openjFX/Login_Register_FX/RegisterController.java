@@ -76,8 +76,9 @@ public class RegisterController implements Initializable{
 		return false;
 		
 	}
-	
+
 	public void SignUp() throws SQLException {
+		// this will check all field have more than 5 char and Email
 		if(!isvalidate() && Email(emailField.getText())) {
 			User user = this.userObject(usernameField.getText(), emailField.getText(), passwordField.getText());
 			if (registerDAO.saveUser(user)>0)
