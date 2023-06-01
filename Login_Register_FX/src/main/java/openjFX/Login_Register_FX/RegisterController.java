@@ -22,6 +22,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import openjFX.Login_Register_FX.DAO.RegisterDAO;
+import openjFX.Login_Register_FX.DAO.User;
+import openjFX.Login_Register_FX.MySQL.database;
 
 public class RegisterController implements Initializable{
 
@@ -31,42 +34,11 @@ public class RegisterController implements Initializable{
 	PasswordField passwordField;
 	@FXML
 	Button signupButton,loginButton;
-	
+
+	RegisterDAO registerDAO = new RegisterDAO();
 	static Logger logger = Logger.getLogger(RegisterController.class.getName());
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		
-
-	}
-	
-	public boolean checkUsers(String username,String email) throws SQLException {
-		boolean checkUsers = false;
-		
-		PreparedStatement pState = null;
-		ResultSet rSet = null;
-		String query = "SELECT email, username FROM users WHERE username = ? OR email = ?";
-		try {
-			pState = database.DbConnected().prepareStatement(query);
-			pState.setString(1, username);
-			pState.setString(2, email);
-			
-			rSet = pState.executeQuery();
-			if(rSet.next()) {
-				checkUsers = true;
-			}
-		}catch (SQLException e) {
-			logger.log(Level.SEVERE,e.getMessage());
-		}finally {
-			if(pState != null) {
-				pState.close();
-			}
-			if(rSet != null) {
-				rSet.close();
-			}
-		}
-		
-		 return checkUsers;
-	}
+	public void initialize(URL location, ResourceBundle resources) {}
 	public boolean Email(String email) {
 		 String emailPattern = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}";
 	     return email.matches(emailPattern);
@@ -99,39 +71,27 @@ public class RegisterController implements Initializable{
 		}else {
 			passwordField.setStyle("-fx-border-color:#aaa;");
 		}
-		if(checkUsers(usernameField.getText(), emailField.getText())) {
-			showAlert(AlertType.ERROR, null, "ERROR", "Username or Email already exists");
-		}else {
-			showAlert(AlertType.INFORMATION, null, "Information", "You success create an account");
-		}
+		if(registerDAO.checkUsers(usernameField.getText(),emailField.getText())){
+			showAlert(AlertType.ERROR,null,"ERROR","Username or email already take");}
 		return false;
 		
 	}
 	
 	public void SignUp() throws SQLException {
-		PreparedStatement pState = null;
-		String query = "Insert into users (username,email,password) Values(?,?,?)";
-		
-		if(!isvalidate() && Email(emailField.getText()) ) {
-			try {
-				pState = database.DbConnected().prepareStatement(query);
-			
-				pState.setString(1, usernameField.getText());
-				pState.setString(2, emailField.getText());
-				pState.setString(3, passwordField.getText());
-			
-				pState.executeUpdate();
-			}catch (SQLException e) {
-				logger.log(Level.SEVERE,e.getMessage());
-			}finally {
-				if(pState != null) {
-					pState.close();
-			}
+		if(!isvalidate() && Email(emailField.getText())) {
+			User user = this.userObject(usernameField.getText(), emailField.getText(), passwordField.getText());
+			if (registerDAO.saveUser(user)>0)
+				showAlert(AlertType.INFORMATION, null, "INFORMATION", "Success");
 		}
 	}
-}
-	
-	
+	public User userObject(String username,String email,String password){
+		User user = new User();
+		user.setUsername(username);
+		user.setEmail(email);
+		user.setPassword(password);
+
+		return user;
+	}
 	public void showAlert(Alert.AlertType alertType, Window owner , String title, String message) {
 		Alert alert = new Alert(alertType);
 		alert.setTitle(title);
