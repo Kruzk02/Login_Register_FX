@@ -19,6 +19,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import openjFX.Login_Register_FX.DAO.LoginDAO;
 
 public class LoginController implements Initializable{
 
@@ -28,7 +29,8 @@ public class LoginController implements Initializable{
 	TextField usernameField;
 	@FXML
 	PasswordField passwordField;
-	
+
+	LoginDAO loginDAO = new LoginDAO();
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	}
@@ -51,33 +53,17 @@ public class LoginController implements Initializable{
 
 		return false;
 	}
-	public void Login() {
+	public void Login(ActionEvent e) throws IOException {
+		if(!isValidated() && loginDAO.Login(usernameField.getText(),passwordField.getText())) {
 
-		PreparedStatement pState = null;
-		ResultSet rSet = null;
-		String query = "Select * from users where username =? and password =? ";
-		if(!isValidated()) {
-			try {
-				pState = database.DbConnected().prepareStatement(query);
-				pState.setString(1, usernameField.getText());
-				pState.setString(2, passwordField.getText());
-				rSet = pState.executeQuery();
-				if(rSet.next()) {
-					Stage stage = (Stage) loginButton.getScene().getWindow();
-					stage.close();
-					
-					Parent root = FXMLLoader.load(getClass().getResource("WelcomePage.fxml"));
-					Scene scene = new Scene(root);
-					
-					stage.setScene(scene);
-					stage.show();
-					
-				}else {
-					showAlert(AlertType.ERROR, null, "ERROR", "Invalid Username or Password");
-				}
-			}catch (Exception e) {
-				System.err.println(e.getMessage());
-			}
+			Parent root = FXMLLoader.load(getClass().getResource("WelcomePage.fxml"));
+			Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add(getClass().getResource("stylesheet.css").toExternalForm());
+			stage.setScene(scene);
+			stage.show();
+		}else {
+			showAlert(AlertType.ERROR, null, "ERROR", "Invalid Username or Password");
 		}
 	}
 	public void showAlert(Alert.AlertType alertType, Window owner , String title, String message) {
